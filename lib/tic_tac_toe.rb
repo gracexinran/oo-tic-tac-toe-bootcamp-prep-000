@@ -21,35 +21,35 @@ def input_to_index(user_input)
   end
 end
 
-def move(@board, index, char)
+def move(index, char)
   @board[index] = char
 end
 
-def position_taken?(board, position)
-  (board[position] == "X" || board[position] == "O")?
+def position_taken?(position)
+  (@board[position] == "X" || @board[position] == "O")?
   true : false
 end
 
-def valid_move?(board, position)
-  if position_taken?(board, position) || position < 0 || position > 8
+def valid_move?(position)
+  if position_taken?(@board, position) || position < 0 || position > 8
     false
   else
     true
   end
 end
 
-def turn(board)
+def turn()
   puts "input: "
   index = input_to_index(gets.strip)
-  while !valid_move?(board, index)
+  while !valid_move?(index)
     puts 'input: '
     index = input_to_index(gets.strip)
   end
   char = current_player(board)
-  move(board, index, char)
+  move(index, char)
 end
 
-def turn_count(board)
+def turn_count()
   count = 0
   board.each do |element|
     if element == 'X' || element == 'O'
@@ -59,65 +59,65 @@ def turn_count(board)
   count
 end
 
-def current_player(board)
-  (turn_count(board) % 2 == 0)?
+def current_player()
+  (turn_count() % 2 == 0)?
   'X' : 'O'
 end
 
-def won?(board)
+def won?()
   WIN_COMBINATIONS.each do |win|
-    if board[win[0]] == 'X' && board[win[1]] == 'X' && board[win[2]] == 'X'
+    if @board[win[0]] == 'X' && @board[win[1]] == 'X' && @board[win[2]] == 'X'
       return true
-    elsif board[win[0]] == 'O' && board[win[1]] == 'O' && board[win[2]] == 'O'
+    elsif @board[win[0]] == 'O' && @board[win[1]] == 'O' && @board[win[2]] == 'O'
       return true
     end
   end
   false
 end
 
-def full?(board)
-  if turn_count(board) == 9 && !won?(board)
+def full?()
+  if turn_count() == 9 && !won?()
     true
-  elsif turn_count(board) < 9 && !won?(board)
+  elsif turn_count() < 9 && !won?()
     false
   end
 end
 
-def draw?(board)
-  if full?(board)
-    true
-  else
-    false
-  end
-end
-
-def over?(board)
-  if draw?(board) || won?(board)
+def draw?()
+  if full?()
     true
   else
     false
   end
 end
 
-def winner(board)
+def over?()
+  if draw?() || won?()
+    true
+  else
+    false
+  end
+end
+
+def winner()
   WIN_COMBINATIONS.each do |win|
-    if board[win[0]] == 'X' && board[win[1]] == 'X' && board[win[2]] == 'X'
+    if @board[win[0]] == 'X' && @board[win[1]] == 'X' && @board[win[2]] == 'X'
       return "X"
-    elsif board[win[0]] == 'O' && board[win[1]] == 'O' && board[win[2]] == 'O'
+    elsif @board[win[0]] == 'O' && @board[win[1]] == 'O' && @board[win[2]] == 'O'
       return "O"
     end
   end
   return nil
 end
 
-def play(board)
-  while !over?(board)
-    turn(board)
+def play()
+  while !over?()
+    turn()
   end
-  if won?(board)
-    winner = winner(board)
+  if won?()
+    winner = winner()
     puts "Congratulations #{winner}!"
-  elsif draw?(board)
+  elsif draw?()
     puts "Cat's Game!"
   end
 end
