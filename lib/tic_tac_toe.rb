@@ -45,7 +45,7 @@ def turn()
     puts 'input: '
     index = input_to_index(gets.strip)
   end
-  char = current_player(board)
+  char = current_player()
   move(index, char)
 end
 
