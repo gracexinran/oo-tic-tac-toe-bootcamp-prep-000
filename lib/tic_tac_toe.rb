@@ -31,7 +31,7 @@ def position_taken?(position)
 end
 
 def valid_move?(position)
-  if position_taken?(@board, position) || position < 0 || position > 8
+  if position_taken?(position) || position < 0 || position > 8
     false
   else
     true
