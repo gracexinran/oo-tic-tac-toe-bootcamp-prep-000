@@ -47,6 +47,7 @@ def turn()
   end
   char = current_player()
   move(index, char)
+  display_board()
 end
 
 def turn_count()
@@ -67,9 +68,9 @@ end
 def won?()
   WIN_COMBINATIONS.each do |win|
     if @board[win[0]] == 'X' && @board[win[1]] == 'X' && @board[win[2]] == 'X'
-      return true
+      return win
     elsif @board[win[0]] == 'O' && @board[win[1]] == 'O' && @board[win[2]] == 'O'
-      return true
+      return win
     end
   end
   false
